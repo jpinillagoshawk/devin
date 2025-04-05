@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="goshawk_odoo_voice_agent.VoiceAgentButton">
+        <div class="o_voice_agent_button">
+            <!-- Microphone button in systray -->
+            <button 
+                class="btn btn-link d-flex align-items-center ms-1 o_voice_agent_mic_button" 
+                t-on-click="toggleMicrophone"
+                t-att-class="{ 'o_recording': state.isRecording }"
+                title="Voice Control"
+            >
+                <i t-if="!state.isRecording" class="fa fa-microphone" />
+                <i t-else="" class="fa fa-microphone text-danger" />
+            </button>
+            
+            <!-- Chat window (shown when active) -->
+            <div t-if="state.showChat" class="o_voice_agent_chat">
+                <div class="o_voice_agent_chat_header">
+                    <div class="o_voice_agent_chat_title">
+                        <i class="fa fa-microphone me-2" />
+                        <span>Voice Assistant</span>
+                    </div>
+                    <div class="o_voice_agent_chat_buttons">
+                        <button 
+                            class="btn btn-link" 
+                            t-on-click="toggleMicrophone"
+                            t-att-class="{ 'text-danger': state.isRecording }"
+                            title="Toggle microphone"
+                        >
+                            <i class="fa fa-microphone" />
+                        </button>
+                        <button class="btn btn-link" t-on-click="closeChat" title="Close">
+                            <i class="fa fa-times" />
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="o_voice_agent_chat_body">
+                    <div class="o_voice_agent_messages">
+                        <t t-foreach="state.messages" t-as="message" t-key="message.id">
+                            <div t-attf-class="o_voice_agent_message o_voice_agent_message_{{message.type}}">
+                                <div class="o_voice_agent_message_content" t-esc="message.content" />
+                                <div class="o_voice_agent_message_time">
+                                    <small t-esc="message.timestamp.toLocaleTimeString()" />
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+                
+                <div class="o_voice_agent_chat_footer">
+                    <form t-on-submit="onSubmit">
+                        <div class="input-group">
+                            <input 
+                                type="text" 
+                                class="form-control o_voice_agent_input" 
+                                placeholder="Type or speak your command..."
+                                t-att-value="state.currentInput"
+                                t-on-input="onInputChange"
+                                t-ref="input"
+                            />
+                            <button 
+                                type="submit" 
+                                class="btn btn-primary"
+                                t-att-disabled="!state.currentInput.trim() || state.isProcessing"
+                            >
+                                <i t-if="!state.isProcessing" class="fa fa-paper-plane" />
+                                <i t-else="" class="fa fa-spinner fa-spin" />
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Voice Agent Form View -->
+    <record id="view_voice_agent_form" model="ir.ui.view">
+        <field name="name">goshawk.voice.agent.form</field>
+        <field name="model">goshawk.voice.agent</field>
+        <field name="arch" type="xml">
+            <form string="Voice Agent">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Voice Agent Name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <field name="active"/>
+                        <field name="api_key" password="True"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Voice Agent Tree View -->
+    <record id="view_voice_agent_tree" model="ir.ui.view">
+        <field name="name">goshawk.voice.agent.tree</field>
+        <field name="model">goshawk.voice.agent</field>
+        <field name="arch" type="xml">
+            <tree string="Voice Agents">
+                <field name="name"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Voice Agent Action -->
+    <record id="action_voice_agent" model="ir.actions.act_window">
+        <field name="name">Voice Agent</field>
+        <field name="res_model">goshawk.voice.agent</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first Voice Agent
+            </p>
+            <p>
+                Configure the Voice Agent to enable voice control in Odoo.
+            </p>
+        </field>
+    </record>
+
+    <!-- Voice Agent Menu -->
+    <menuitem id="menu_voice_agent"
+        name="Voice Agent"
+        action="action_voice_agent"
+        parent="base.menu_administration"
+        sequence="100"/>
+</odoo>
