@@ -17,7 +17,7 @@ class VoiceAgent(models.Model):
         """
         Generate a prompt from the user's text input using Google Gemini
         """
-        api_key = self.api_key or os.environ.get("AIzaSyBNuuybMmcFjk6WZbzI5ZrrL7lp3HQKn0Y")
+        api_key = self.api_key or os.environ.get("GOOGLE_GEMINI_API_KEY")
         client = genai.Client(api_key=api_key)
         
         model = "gemini-2.0-flash-lite"
@@ -56,7 +56,7 @@ class VoiceAgent(models.Model):
         """
         Convert a prompt into executable JavaScript code for Odoo actions
         """
-        api_key = self.api_key or os.environ.get("AIzaSyBNuuybMmcFjk6WZbzI5ZrrL7lp3HQKn0Y")
+        api_key = self.api_key or os.environ.get("GOOGLE_GEMINI_API_KEY")
         client = genai.Client(api_key=api_key)
         
         model = "gemini-2.0-flash-lite"
